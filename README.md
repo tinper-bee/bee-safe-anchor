@@ -31,6 +31,5 @@ var SafeAnchor = require('bee-safe-anchor');
 |href|跳转地址|string|-|
 |onClick|点击事件|function|-|
 |disabled|是否禁用|boolean|false|
-|role|----|---|------|
-|tabIndex|tab切换|number/string|------|
+|tabIndex|tab切换|number/string|-|
 |componentClass|组件元素|string/element|a|

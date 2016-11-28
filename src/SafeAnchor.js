@@ -1,29 +1,29 @@
-import React from 'react';
-import elementType from 'react-prop-types/lib/elementType';
+import React, { PropTypes, Component } from 'react';
+import { elementType } from 'tinper-bee-core';
 
 const propTypes = {
   /**
    * 目标地址
    */
-  href: React.PropTypes.string,
+  href: PropTypes.string,
   /**
    * 点击事件
    */
-  onClick: React.PropTypes.func,
+  onClick: PropTypes.func,
   /**
    * 是否禁用
    */
-  disabled: React.PropTypes.bool,
+  disabled: PropTypes.bool,
   /**
-   * 点击事件
+   *  渲染规则
    */
-  role: React.PropTypes.string,
+  role: PropTypes.string,
   /**
    * tab切换目标
    */
-  tabIndex: React.PropTypes.oneOfType([
-    React.PropTypes.number,
-    React.PropTypes.string
+  tabIndex: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
   ]),
   /**
    * 组件元素
@@ -32,8 +32,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  componentClass: 'a',
-  disabled: false
+  componentClass: 'a'
 };
 
 function isTrivialHref(href) {
@@ -41,7 +40,7 @@ function isTrivialHref(href) {
 }
 
 
-class SafeAnchor extends React.Component {
+class SafeAnchor extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -50,13 +49,14 @@ class SafeAnchor extends React.Component {
 
   handleClick(event) {
     const { disabled, href, onClick } = this.props;
+    console.log(event);
 
     if (disabled || isTrivialHref(href)) {
-      event.preventDefault();
+        if(event) event.preventDefault();
     }
 
     if (disabled) {
-      event.stopPropagation();
+      if(event) event.stopPropagation();
       return;
     }
 
@@ -70,8 +70,7 @@ class SafeAnchor extends React.Component {
 
     if (isTrivialHref(props.href)) {
       props.role = props.role || 'button';
-      // we want to make sure there is a href attribute on the node
-      // otherwise, the cursor incorrectly styled (except with role='button')
+      //我们要确保节点上有一个href属性//否则样式不正确（除了role ='button'）
       props.href = props.href || '';
     }
 

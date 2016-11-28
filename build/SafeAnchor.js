@@ -10,9 +10,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _elementType = require('react-prop-types/lib/elementType');
-
-var _elementType2 = _interopRequireDefault(_elementType);
+var _tinperBeeCore = require('tinper-bee-core');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -30,27 +28,27 @@ var propTypes = {
   /**
    * 目标地址
    */
-  href: _react2["default"].PropTypes.string,
+  href: _react.PropTypes.string,
   /**
    * 点击事件
    */
-  onClick: _react2["default"].PropTypes.func,
+  onClick: _react.PropTypes.func,
   /**
    * 是否禁用
    */
-  disabled: _react2["default"].PropTypes.bool,
+  disabled: _react.PropTypes.bool,
   /**
-   * 点击事件
+   *  渲染规则
    */
-  role: _react2["default"].PropTypes.string,
+  role: _react.PropTypes.string,
   /**
    * tab切换目标
    */
-  tabIndex: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.string]),
+  tabIndex: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
   /**
    * 组件元素
    */
-  componentClass: _elementType2["default"]
+  componentClass: _tinperBeeCore.elementType
 };
 
 var defaultProps = {
@@ -61,13 +59,13 @@ function isTrivialHref(href) {
   return !href || href.trim() === '#';
 }
 
-var SafeAnchor = function (_React$Component) {
-  _inherits(SafeAnchor, _React$Component);
+var SafeAnchor = function (_Component) {
+  _inherits(SafeAnchor, _Component);
 
   function SafeAnchor(props, context) {
     _classCallCheck(this, SafeAnchor);
 
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
+    var _this = _possibleConstructorReturn(this, _Component.call(this, props, context));
 
     _this.handleClick = _this.handleClick.bind(_this);
     return _this;
@@ -79,13 +77,14 @@ var SafeAnchor = function (_React$Component) {
     var href = _props.href;
     var onClick = _props.onClick;
 
+    console.log(event);
 
     if (disabled || isTrivialHref(href)) {
-      event.preventDefault();
+      if (event) event.preventDefault();
     }
 
     if (disabled) {
-      event.stopPropagation();
+      if (event) event.stopPropagation();
       return;
     }
 
@@ -103,8 +102,7 @@ var SafeAnchor = function (_React$Component) {
 
     if (isTrivialHref(props.href)) {
       props.role = props.role || 'button';
-      // we want to make sure there is a href attribute on the node
-      // otherwise, the cursor incorrectly styled (except with role='button')
+      //我们要确保节点上有一个href属性//否则样式不正确（除了role ='button'）
       props.href = props.href || '';
     }
 
@@ -119,7 +117,7 @@ var SafeAnchor = function (_React$Component) {
   };
 
   return SafeAnchor;
-}(_react2["default"].Component);
+}(_react.Component);
 
 SafeAnchor.propTypes = propTypes;
 SafeAnchor.defaultProps = defaultProps;

@@ -3,12 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SafeAnchor = undefined;
 
-var _SafeAnchor2 = require('./SafeAnchor');
+var _SafeAnchor = require('./SafeAnchor');
 
-var _SafeAnchor3 = _interopRequireDefault(_SafeAnchor2);
+var _SafeAnchor2 = _interopRequireDefault(_SafeAnchor);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-exports.SafeAnchor = _SafeAnchor3["default"];
+exports["default"] = _SafeAnchor2["default"];
+module.exports = exports['default'];

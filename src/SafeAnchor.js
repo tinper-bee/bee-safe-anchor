@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { elementType } from 'tinper-bee-core';
+import classnames from 'classnames';
 
 const propTypes = {
   /**
@@ -29,10 +30,13 @@ const propTypes = {
    * 组件元素
    */
   componentClass: elementType,
+  offsetBottom:PropTypes.number,
+  offsetTop:PropTypes.number,
 };
 
 const defaultProps = {
-  componentClass: 'a'
+  componentClass: 'a',
+  clsPrefix: 'u-anchor'
 };
 
 function isTrivialHref(href) {
@@ -48,8 +52,9 @@ class SafeAnchor extends Component {
   }
 
   handleClick(event) {
-    const { disabled, href, onClick } = this.props;
-    console.log(event);
+    const {disabled,
+            href,
+            onClick } = this.props;
 
     if (disabled || isTrivialHref(href)) {
         if(event) event.preventDefault();
@@ -66,21 +71,29 @@ class SafeAnchor extends Component {
   }
 
   render() {
-    const { componentClass: Component, disabled, ...props } = this.props;
+    const {
+        componentClass: Component,
+        clsPrefix,
+        disabled,
+        ...props } = this.props;
 
     if (isTrivialHref(props.href)) {
       props.role = props.role || 'button';
       //我们要确保节点上有一个href属性//否则样式不正确（除了role ='button'）
       props.href = props.href || '';
     }
+    const classes = {
+        [`${clsPrefix}`]: true,
+        [`${clsPrefix}-disabled`]: disabled
+    };
 
     if (disabled) {
       props.tabIndex = -1;
-      props.style = { pointerEvents: 'none', ...props.style };
     }
 
     return (
       <Component
+        className={classnames(classes)}
         {...props}
         onClick={this.handleClick}
       />
